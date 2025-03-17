@@ -1,13 +1,15 @@
 import './sources.css';
 /*global document*/
 class Sources {
+
     draw(data: {
         id: string,
         name: string
         }[]): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
-        
+        let currentLetter: string = '';
+
         if (!sourceItemTemp) return;
 
         data.forEach((item) => {
@@ -21,16 +23,17 @@ class Sources {
             if (sourceItem) {
                 sourceItem.setAttribute('data-source-id', item.id);
             }
-
             fragment.append(sourceClone);
 
-        });
+            
 
+        });
         const sourcesContainer = document.querySelector<HTMLElement>('.sources');
         if (sourcesContainer) {
             sourcesContainer.append(fragment);
         }
     }
+
 }
 
 export default Sources;
