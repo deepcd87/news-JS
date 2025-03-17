@@ -1,18 +1,19 @@
 import AppLoader from './appLoader';
-import {SourcesData, NewsData} from '../app/Interfaces/interfaces';
-import {ApiResponse} from '../app/Interfaces/interfaces';
+import {SourcesData, NewsData} from '../app/interfaces';
+import {Endpoint} from '../app/enums';
+import { Callback } from '../app/types';
 
 class AppController extends AppLoader {
-    getSources(callback: (data: SourcesData) => void): void {
+    public getSources(callback: Callback<SourcesData>): void {
         super.getResp(
             {
-                endpoint: 'sources',
+                endpoint: Endpoint.SOURCES,
             },
             callback
         );
     }
 
-    getNews(e: Event, callback: (data: NewsData) => void): void {
+    public getNews(e: Event, callback: Callback<NewsData>): void {
         const target = e.target as HTMLElement;
         const newsContainer = e.currentTarget as HTMLElement;
 
@@ -25,7 +26,7 @@ class AppController extends AppLoader {
                     newsContainer.setAttribute('data-source', sourceId);
                     super.getResp(
                         {
-                            endpoint: 'everything',
+                            endpoint: Endpoint.EVERYTHING,
                             options: {
                                 sources: sourceId,
                             },
@@ -35,7 +36,7 @@ class AppController extends AppLoader {
                 }
                 return;
             }
-            currentTarget = currentTarget.parentElement;
+            currentTarget = currentTarget.parentElement as HTMLElement;
         }
 
     }

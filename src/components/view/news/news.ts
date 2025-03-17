@@ -1,5 +1,5 @@
 import './news.css';
-import {NewsItem} from '../../app/Interfaces/interfaces';
+import {NewsItem} from '../../app/interfaces';
 /*global document*/
 
 class News {

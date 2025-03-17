@@ -1,14 +1,14 @@
 import './sources.css';
 /*global document*/
+type SourceDataType = {
+    id: string;
+    name: string
+}
 class Sources {
 
-    draw(data: {
-        id: string,
-        name: string
-        }[]): void {
+    public draw(data: SourceDataType[]): void {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
-        let currentLetter: string = '';
 
         if (!sourceItemTemp) return;
 
@@ -24,8 +24,6 @@ class Sources {
                 sourceItem.setAttribute('data-source-id', item.id);
             }
             fragment.append(sourceClone);
-
-            
 
         });
         const sourcesContainer = document.querySelector<HTMLElement>('.sources');

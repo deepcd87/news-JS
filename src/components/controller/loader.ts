@@ -1,35 +1,40 @@
-import {ApiResponse, NewsData, SourcesData} from '../app/Interfaces/interfaces';
-
+import {HttpMethod} from '../app/enums';
+import { Callback } from '../app/types';
 /*global console, fetch */
+
+type LoaderOptions = {
+    [key: string]: string;
+}
+
 class Loader {
     private baseLink: string;
-    public options: Record<string, string>; 
+    private options: LoaderOptions; 
 
 
-    constructor(baseLink: string, options: Record<string, string>) {
+    constructor(baseLink: string, options: LoaderOptions) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
-    getResp(
+    protected getResp<Type>(
         { endpoint, options = {} }: {
             endpoint: string;
-            options?: Record<string, string>
+            options?: LoaderOptions
         },
-        callback = (data: any) => {
+        callback: Callback<Type> = () => {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load('GET', endpoint, callback, options);
+        this.load(HttpMethod.GET, endpoint, callback, options);
     }
 
     private errorHandler(res: Response): Response {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === 401 || res.status === 404) {
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+            }
             throw Error(res.statusText);
         }
-
         return res;
     }
 
@@ -40,14 +45,13 @@ class Loader {
         Object.keys(urlOptions).forEach((key) => {
             url += `${key}=${urlOptions[key]}&`;
         });
-        console.log(url.slice(0, -1));
         return url.slice(0, -1);
     }
 
-    private load(
+    private load<Type>(
         method: string, 
         endpoint: string, 
-        callback: (data: any) => void, 
+        callback: Callback<Type>, 
         options: Record<string, string> = {}
     ) {
         fetch(this.makeUrl(options, endpoint), { method })

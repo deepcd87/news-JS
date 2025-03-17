@@ -1,8 +1,6 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
-import {ApiResponse} from '../app/Interfaces/interfaces';
-import {NewsData, SourcesData} from './Interfaces/interfaces';
-
+import {NewsData, SourcesData} from './interfaces';
 
 class App {
     private controller: AppController;
@@ -13,7 +11,7 @@ class App {
         this.view = new AppView();
     }
 
-    start(): void {
+    public start(): void {
         const newsContainer = document.querySelector<HTMLElement>('.sources');
 
         if (newsContainer) {

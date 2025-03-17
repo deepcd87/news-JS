@@ -1,6 +1,9 @@
+
 export interface NewsData {
 	articles?: {
-			source: { name: string };
+			source: { 
+				name: string 
+			};
 			author?: string;
 			title: string;
 			description: string;
@@ -11,7 +14,9 @@ export interface NewsData {
 }
 
 export interface NewsItem {
-	source: { name: string };
+	source: { 
+		name: string 
+	};
 	author?: string;
 	title: string;
 	description: string;
@@ -31,5 +36,3 @@ export interface SourcesItems {
 	id: string;
 	name: string;
 };
-
-export type ApiResponse = NewsData | SourcesData;
